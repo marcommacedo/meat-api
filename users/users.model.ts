@@ -42,6 +42,14 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+export interface UserModel extends mongoose.Model<User> {
+    findByEmail(email: string): Promise<User>
+}
+
+userSchema.statics.findByEmail = function (email: string) {
+    return this.findOne({ email })
+}
+
 const hashPassword = (obj, next) => {
     bcrypt.hash(obj.password, enviroment.security.saltRounds)
         .then(hash => {
@@ -72,4 +80,4 @@ userSchema.pre('save', saveMiddleware)
 userSchema.pre('findOneAndUpdate', updateMiddleware)
 userSchema.pre('update', updateMiddleware)
 
-export const User = mongoose.model<User>('User', userSchema)
+export const User = mongoose.model<User, UserModel>('User', userSchema)
