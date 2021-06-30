@@ -4,11 +4,29 @@
   "description": "API de restaurantes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node jest.startup.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "globals": {
+      "address": "http://localhost:3001"
+    },
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
   "dependencies": {
     "bcrypt": "5.0.1",
     "mongoose": "4.13.9",
@@ -17,8 +35,16 @@
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
-    "@types/mongoose": "^4.7.32",
+    "@types/jest": "22.1.2",
+    "@types/mongoose": "^4.7.56",
     "@types/restify": "^8.5.1",
-    "@types/restify-errors": "4.3.2"
+    "@types/restify-errors": "^4.3.3",
+    "@types/supertest": "^2.0.11",
+    "jest": "^22.4.4",
+    "jest-cli": "22.4.2",
+    "supertest": "3.4.2",
+    "ts-jest": "22.4.6",
+    "ts-node": "10.0.0",
+    "typescript": "^2.9.2"
   }
 }

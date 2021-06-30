@@ -1,6 +1,6 @@
 import * as restify from "restify"
 import * as mongoose from "mongoose"
-import { enviroment } from "../common/enviroment"
+import { environment } from "../common/environment"
 import { Router } from "../common/router"
 import { mergePatchBodyParser } from "./merge-patch.parsers"
 import { handleError } from "./error.handler"
@@ -11,7 +11,7 @@ export class Server {
     initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise
 
-        return mongoose.connect(enviroment.db.url, {
+        return mongoose.connect(environment.db.url, {
             useMongoClient: true
         })
     }
@@ -35,7 +35,7 @@ export class Server {
 
                 this.application.on('restifyError', handleError)
 
-                this.application.listen(enviroment.server.port, () => {
+                this.application.listen(environment.server.port, () => {
                     resolve(this.application)
                 })
             } catch (error) {
@@ -46,5 +46,9 @@ export class Server {
 
     bootstrap(routers: Router[] = []): Promise<Server> {
         return this.initializeDb().then(() => this.initRoutes(routers).then(() => this))
+    }
+
+    shutdown() {
+        return mongoose.disconnect().then(() => this.application.close())
     }
 }
