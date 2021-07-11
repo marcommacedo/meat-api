@@ -55,7 +55,6 @@ class RestaurantsRouter extends ModelRouter<Restaurant> {
         ])
 
         application.get(`${this.basePath}/:id`, [
-            authorize('admin'),
             this.validateId,
             this.findById
         ])
